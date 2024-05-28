@@ -148,7 +148,7 @@ def generate_executable():
 
 
     
-    return send_file(as_attachment=True)
+    return render_template('payload.html)
 
 
 @app.route("/payload")
