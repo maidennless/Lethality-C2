@@ -133,7 +133,7 @@ def home():
 @app.route('/generate_executable', methods=['POST'])
 def generate_executable():
     
-    client_script_path = 'Project\\threaded_client.py'
+    client_script_path = 'client.py'
 
     current_directory = os.getcwd()
     print(f"Current working directory: {current_directory}")
