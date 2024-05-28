@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-size: 14px; 
+            text-align: center;
+            word-wrap: break-word; 
+        }
+        #output {
+            width: 300px; 
+            height: 150px; 
+            background-color: #333; 
+            overflow: hidden; 
+            resize: none; 
+            border: 1px solid white; 
+            padding: 10px; 
+            font-size: 14px; 
+            transition: height 2s ease-in;
+            transition: height 1s ease-out;
+            text-align: center; 
+            margin: auto; 
+        }
+        #input-container {
+            text-align: center; 
+            margin-top: 50px; 
+        }
+        #input-container input[type="text"] {
+            background-color: #E6E45D;
+            height: 50px;
+            font-size: 18px; 
+            width: 300px; 
+            margin-bottom: 10px; 
+        }
+        #input-container input[type="submit"] {
+            height: 50px;
+            width: 70px;
+            font-size: 18px; 
+        }
+        .dashboard {
+            background-color: #585D55; 
+            padding: 10px; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 5px solid darkgrey;
+        }
+        .dashboard a {
+            color: white; 
+            text-decoration: none; 
+            margin-right: 10px; 
+        }
+        .dashboard a:hover {
+            color: #585D55; 
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <a href="http://127.0.0.1:5000/">Home</a>
+        <a href="http://127.0.0.1:5000/connections">Connections</a>
+        <a href="http://127.0.0.1:5000/payload">Payload</a>
+        <br>
+    </div>
+    <h1>Keylogger:</h1> 
+    
+    <div id="output" oninput="resizeOutputBox()">
+        <pre><font size="-1">{{ cmdoutput }}</font></pre> 
+    </div>
+    
+    
+    <script>
+        
+        function resizeOutputBox() {
+            var output = document.getElementById("output");
+            output.style.height = output.scrollHeight + "px";
+            output.style.width = output.scrollWidth + "px";
+        }
+        
+        
+        resizeOutputBox();
+    </script>
+</body>
+</html>

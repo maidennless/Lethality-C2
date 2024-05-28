@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-size: 14px; 
+            text-align: center; 
+        }
+        .dashboard {
+            background-color: #585D55; 
+            padding: 10px; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 5px solid darkgrey;
+        }
+        .dashboard a {
+            color: white; 
+            text-decoration:dotted; 
+            margin-right: 10px; 
+        }
+        .dashboard a:hover {
+            color: #585D55; 
+        }
+        .title {
+            margin-bottom: 20px; 
+        }
+        .button {
+            background-color: #585D55;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #585D55;
+        }
+        .execute-link {
+            color: white; 
+            text-decoration: none; 
+            transition: color 0.3s ease; 
+        }
+        .execute-link:hover {
+            color: #E6E45D; 
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <a href="http://127.0.0.1:5000/">Home</a>
+        <a href="http://127.0.0.1:5000/connections">Connections</a>
+        <a href="http://127.0.0.1:5000/payload">Payload</a>
+        <br>
+    </div>
+    
+    <h1 class="title is-3"><br><br>Payloads:</h1> 
+
+    
+
+    <!-- payload generation ka button -->
+    <h2 style="text-align: left; margin-left: 20px;">Generate Executable</h2>
+    <p style="text-align: left; margin-left: 20px;">
+        <button class="button" onclick="generateExecutable()">Generate Executable</button>
+    </p>
+
+    <script>
+        function generateExecutable() {
+            fetch('/generate_executable', {
+                method: 'POST'
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'threaded_client.exe';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDOS</title>
+    <script>
+        function fetchDdosOutput() {
+            fetch('/get_ddos_output')
+                .then(response => response.json())
+                .then(data => {
+                    const outputElement = document.getElementById('ddos-output');
+                    outputElement.innerHTML = data.ddos_output.join('<br>');
+                })
+                .catch(error => console.error('Error fetching DDOS output:', error));
+        }
+
+        setInterval(fetchDdosOutput, 1000); // Fetch output every second
+    </script>
+</head>
+<body>
+    <h1>DDOS Attack</h1>
+    <form action="/start_ddos" method="POST">
+        <label for="target_ip">Target IP:</label>
+        <input type="text" id="target_ip" name="target_ip" required>
+        <button type="submit">Start DDOS</button>
+    </form>
+    <h2>DDOS Output:</h2>
+    <div id="ddos-output"></div>
+</body>
+</html>
